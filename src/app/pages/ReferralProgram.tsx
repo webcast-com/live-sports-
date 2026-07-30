@@ -35,14 +35,14 @@ export function ReferralProgram() {
   const referralLink = referralCode ? `${window.location.origin}/?ref=${referralCode.code}` : '';
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
+    <div className="w-full max-w-5xl min-w-0 mx-auto space-y-8">
       <SEO pageKey="referral" title="Referral Program - Earn Premium Days | ScoreHub" description="Refer friends to ScoreHub and earn 3 days premium for each friend who joins. Share your referral code and grow the community." />
 
       <div className="text-center space-y-4">
         <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 text-amber-400 px-4 py-1.5 rounded-full text-sm font-semibold">
           <Gift className="w-4 h-4" /> Phase 5 - Referral Program
         </div>
-        <h1 className="text-4xl font-black text-white">Invite Friends, Earn Premium</h1>
+        <h1 className="text-3xl sm:text-4xl font-black text-white">Invite Friends, Earn Premium</h1>
         <p className="text-gray-400 max-w-2xl mx-auto">Share ScoreHub with friends. For each friend who signs up using your link, you both get <span className="text-amber-400 font-bold">3 days of premium free</span>!</p>
       </div>
 
@@ -79,17 +79,17 @@ export function ReferralProgram() {
           <Card className="border-[#00d4ff]/20">
             <CardContent className="p-6">
               <h3 className="font-bold text-white mb-4 flex items-center gap-2"><Link2 className="w-5 h-5 text-[#00d4ff]" /> Your Referral Link</h3>
-              <div className="flex gap-2">
-                <input type="text" value={referralLink} readOnly className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white font-mono text-sm focus:outline-none" />
-                <Button onClick={copyReferralLink} variant={copied ? 'default' : 'outline'} className="shrink-0">
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <input type="text" value={referralLink} readOnly className="w-full min-w-0 flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white font-mono text-sm focus:outline-none" />
+                <Button onClick={copyReferralLink} variant={copied ? 'default' : 'outline'} className="w-full shrink-0 sm:w-auto">
                   {copied ? <><Check className="w-4 h-4 mr-1" /> Copied</> : <><Copy className="w-4 h-4 mr-1" /> Copy</>}
                 </Button>
-                <Button onClick={shareReferral} variant="premium" className="shrink-0">
+                <Button onClick={shareReferral} variant="premium" className="w-full shrink-0 sm:w-auto">
                   <Share2 className="w-4 h-4 mr-1" /> Share
                 </Button>
               </div>
 
-              <div className="grid grid-cols-3 gap-3 mt-6">
+              <div className="grid grid-cols-1 gap-3 mt-6 sm:grid-cols-3">
                 <button onClick={() => { if (referralCode) window.open(`https://wa.me/?text=${encodeURIComponent(`Join me on ScoreHub! Use my code ${referralCode.code} ${referralLink}`)}`, '_blank'); }} className="flex flex-col items-center gap-2 p-4 bg-green-500/10 border border-green-500/20 rounded-xl hover:bg-green-500/20 transition-colors">
                   <MessageCircle className="w-6 h-6 text-green-400" /><span className="text-xs font-medium text-green-400">WhatsApp</span>
                 </button>
@@ -131,9 +131,9 @@ export function ReferralProgram() {
           <Card className="border-amber-500/20">
             <CardContent className="p-6">
               <h3 className="font-bold text-white mb-4">Have a Referral Code?</h3>
-              <div className="flex gap-2">
-                <input type="text" value={manualCode} onChange={(e) => setManualCode(e.target.value.toUpperCase())} placeholder="Enter code e.g. SCORE-ABC123" className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-amber-500/50 font-mono" />
-                <Button onClick={handleApplyCode} disabled={!manualCode.trim() || isApplying} variant="premium">
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <input type="text" value={manualCode} onChange={(e) => setManualCode(e.target.value.toUpperCase())} placeholder="Enter code e.g. SCORE-ABC123" className="w-full min-w-0 flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-amber-500/50 font-mono" />
+                <Button onClick={handleApplyCode} disabled={!manualCode.trim() || isApplying} variant="premium" className="w-full sm:w-auto">
                   {isApplying ? 'Applying...' : 'Apply Code'}
                 </Button>
               </div>
@@ -152,7 +152,7 @@ export function ReferralProgram() {
                 <h3 className="font-bold text-white mb-4 flex items-center gap-2"><TrendingUp className="w-5 h-5 text-[#00d4ff]" /> Your Referrals ({referrals.length})</h3>
                 <div className="space-y-3">
                   {referrals.map((ref: any) => (
-                    <div key={ref.id} className="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-white/5">
+                    <div key={ref.id} className="flex flex-col gap-3 p-3 bg-white/5 rounded-xl border border-white/5 sm:flex-row sm:items-center sm:justify-between">
                       <div>
                         <p className="text-white text-sm font-medium font-mono">{ref.referral_code}</p>
                         <p className="text-gray-500 text-xs">{new Date(ref.created_at).toLocaleDateString()} · {ref.status}</p>

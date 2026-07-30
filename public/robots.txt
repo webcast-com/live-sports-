@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Private routes - no index
+Disallow: /settings
+Disallow: /subscription
+Disallow: /webhook
+Disallow: /admin
+Disallow: /api/
+Disallow: /private/
+
+# Sitemap
+Sitemap: https://livescoresgames.netlify.app/sitemap.xml

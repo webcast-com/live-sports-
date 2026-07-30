@@ -34,6 +34,7 @@ const SlideResults = lazy(() => import('../SlideResults').then(m => ({ default: 
 const SureBets = lazy(() => import('./SureBets').then(m => ({ default: m.SureBets })));
 const AdminDashboard = lazy(() => import('@/app/pages/AdminDashboard').then(m => ({ default: m.default })));
 const LeaderboardPage = lazy(() => import('@/app/pages/LeaderboardPage').then(m => ({ default: m.default })));
+const ReferralProgram = lazy(() => import('@/app/pages/ReferralProgram').then(m => ({ default: m.ReferralProgram })));
 
 const tabPaths: Record<MainTab, string> = {
   dashboard: '/',

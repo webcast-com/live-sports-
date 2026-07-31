@@ -1,10 +1,11 @@
 /**
  * Web Vitals reporting - Phase 2 performance monitoring
- * Logs CLS, FID, FCP, LCP, TTFB to console in dev, can be sent to analytics in prod
+ * Logs CLS, FCP, LCP, TTFB, INP to console in dev, can be sent to analytics in prod
+ * (FID was retired by Google and removed from web-vitals v4+; INP replaced it)
  */
 
 export interface WebVitalMetric {
-  name: 'CLS' | 'FID' | 'FCP' | 'LCP' | 'TTFB' | 'INP';
+  name: 'CLS' | 'FCP' | 'LCP' | 'TTFB' | 'INP';
   value: number;
   rating: 'good' | 'needs-improvement' | 'poor';
   delta: number;
@@ -22,14 +23,15 @@ function logMetric(metric: WebVitalMetric) {
 }
 
 export function initWebVitals() {
-  // Dynamic import to avoid bundling web-vitals in initial chunk if not needed
-  import('web-vitals').then(({ onCLS, onFID, onFCP, onLCP, onTTFB, onINP }) => {
+  // Dynamic import to avoid bundling web-vitals in initial chunk if not needed.
+  // Note: onFID was removed in web-vitals v4+ (FID was retired by Google in
+  // favor of INP), so we report CLS/FCP/LCP/TTFB/INP only.
+  import('web-vitals').then(({ onCLS, onFCP, onLCP, onTTFB, onINP }) => {
     onCLS(logMetric);
-    onFID(logMetric);
     onFCP(logMetric);
     onLCP(logMetric);
     onTTFB(logMetric);
-    onINP?.(logMetric);
+    onINP(logMetric);
   }).catch(() => {
     // web-vitals not installed, skip silently
     if (import.meta.env.DEV) console.info('web-vitals package not installed, skipping metrics');

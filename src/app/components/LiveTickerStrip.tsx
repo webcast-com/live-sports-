@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { getPredictions, type ApiPrediction } from '../services/footballApi';
-import { getBetigoloHistory, type BetigoloHistory } from '../services/betigoloApi';
+import { getBetigoloHistory, type BetigoloResult } from '../services/betigoloApi';
 
 interface TickerMatch {
   id: string;
@@ -34,18 +34,20 @@ export function LiveTickerStrip() {
     return `hsl(${hues[hashCode(str) % hues.length]}, 70%, 50%)`;
   };
 
-  const formatBetigoloMatch = (history: BetigoloHistory, index: number): TickerMatch => {
-    const homeTeam = history.homeTeam || history.home || 'HOME';
-    const awayTeam = history.awayTeam || history.away || 'AWAY';
+  const formatBetigoloMatch = (history: BetigoloResult, index: number): TickerMatch => {
+    const homeTeam = history.home_team || history.home_team_name || history.home || 'HOME';
+    const awayTeam = history.away_team || history.away_team_name || history.away || 'AWAY';
+    const homeScore = history.home_score ?? history.score_home;
+    const awayScore = history.away_score ?? history.score_away;
 
     return {
       id: `betigolo-${history.id || index}`,
-      leagueId: (history.league || 'TIPS').substring(0, 3).toUpperCase(),
+      leagueId: (history.league || history.competition || 'TIPS').substring(0, 3).toUpperCase(),
       homeCode: homeTeam.substring(0, 3).toUpperCase(),
       awayCode: awayTeam.substring(0, 3).toUpperCase(),
-      homeScore: Math.floor(Math.random() * 3),
-      awayScore: Math.floor(Math.random() * 3),
-      time: `${45 + Math.floor(Math.random() * 50)}'`,
+      homeScore: homeScore ?? Math.floor(Math.random() * 3),
+      awayScore: awayScore ?? Math.floor(Math.random() * 3),
+      time: homeScore != null && awayScore != null ? 'FT' : `${45 + Math.floor(Math.random() * 50)}'`,
       homeColor: generateDeterministicColor(homeTeam),
       awayColor: generateDeterministicColor(awayTeam),
       source: 'betigolo',

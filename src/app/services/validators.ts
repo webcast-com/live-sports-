@@ -63,7 +63,7 @@ export function validateLiveMatches(data: unknown) {
     return { success: true as const, data: LiveMatchesResponseSchema.parse(data) };
   } catch (e) {
     if (e instanceof z.ZodError) {
-      return { success: false as const, error: e.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ') };
+      return { success: false as const, error: e.issues.map(err => `${err.path.join('.')}: ${err.message}`).join(', ') };
     }
     return { success: false as const, error: 'Unknown validation error' };
   }
@@ -74,7 +74,7 @@ export function validateContactForm(data: unknown) {
     return { success: true as const, data: ContactFormSchema.parse(data) };
   } catch (e) {
     if (e instanceof z.ZodError) {
-      return { success: false as const, error: e.errors[0]?.message || 'Validation failed', details: e.errors };
+      return { success: false as const, error: e.issues[0]?.message || 'Validation failed', details: e.issues };
     }
     return { success: false as const, error: 'Validation failed' };
   }

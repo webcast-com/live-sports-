@@ -229,7 +229,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           redirectTo: window.location.origin,
           queryParams: {
             access_type: 'offline',
-            prompt: provider === 'google' ? 'consent' : undefined,
+            ...(provider === 'google' ? { prompt: 'consent' } : {}),
           },
         },
       });

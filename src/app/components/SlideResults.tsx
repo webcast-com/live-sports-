@@ -649,7 +649,7 @@ export function SlideResults({ setActiveTab }: { setActiveTab: (tab: string) => 
               <h3 className="font-bold text-lg mb-1">Unlock Premium Features</h3>
               <p className="text-blue-100 text-sm">{`Get full access to ${results[0]?.source === 'betigolo-api' ? 'BetiGolo API' : 'prediction'} data, live predictions, and advanced analytics.`}</p>
             </div>
-            <Button variant="secondary" onClick={() => setActiveTab('premium')} className="shrink-0">
+            <Button variant="default" onClick={() => setActiveTab('premium')} className="shrink-0">
               {`Upgrade for KSh ${100}`}
             </Button>
           </CardContent>

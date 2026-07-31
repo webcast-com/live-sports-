@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, Mail, Lock, User, Eye, EyeOff, TrendingUp, Loader2, CheckCircle, ArrowLeft, Chrome } from 'lucide-react';
+import { X, Mail, Lock, User, Eye, EyeOff, TrendingUp, Loader2, CheckCircle, ArrowLeft } from 'lucide-react';
+import { GoogleIcon } from './BrandIcons';
 import { useAuth } from '@/app/context/AuthContext';
 
 type Mode = 'signin' | 'signup' | 'forgot';
@@ -145,7 +146,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
       {mode !== 'forgot' && (
         <>
           <button onClick={handleGoogleSignIn} disabled={!!oauthLoading} className="w-full py-2.5 rounded-xl bg-white text-black text-sm font-semibold hover:bg-gray-100 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2 mb-4 border border-white/10">
-            {oauthLoading === 'google' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Chrome className="w-4 h-4" />}
+            {oauthLoading === 'google' ? <Loader2 className="w-4 h-4 animate-spin" /> : <GoogleIcon className="w-4 h-4" />}
             Continue with Google
           </button>
 

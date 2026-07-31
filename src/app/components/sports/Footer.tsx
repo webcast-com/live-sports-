@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { TrendingUp, Send, CheckCircle, Twitter, Youtube, Instagram, Facebook } from 'lucide-react';
+import { TrendingUp, Send, CheckCircle } from 'lucide-react';
+import { TwitterIcon, YoutubeIcon, InstagramIcon, FacebookIcon } from './BrandIcons';
 
 interface FooterProps {
   onNavigate?: (href: string) => void;
@@ -121,10 +122,10 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </p>
             <div className="flex gap-2">
               {[
-                { Icon: Twitter, url: socialLinks.twitter },
-                { Icon: Youtube, url: socialLinks.youtube },
-                { Icon: Instagram, url: socialLinks.instagram },
-                { Icon: Facebook, url: socialLinks.facebook },
+                { Icon: TwitterIcon, url: socialLinks.twitter },
+                { Icon: YoutubeIcon, url: socialLinks.youtube },
+                { Icon: InstagramIcon, url: socialLinks.instagram },
+                { Icon: FacebookIcon, url: socialLinks.facebook },
               ].map(({ Icon, url }, i) => (
                 <a
                   key={i}

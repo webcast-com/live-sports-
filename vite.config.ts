@@ -12,7 +12,7 @@ function figmaAssetResolver() {
     resolveId(id: string) {
       if (id.startsWith('figma:asset/')) {
         const filename = id.replace('figma:asset/', '')
-        return path.resolve(__dirname, 'src/assets', filename)
+        return path.resolve(import.meta.dirname, 'src/assets', filename)
       }
     },
   }
@@ -24,8 +24,8 @@ function sitemapGenerator() {
     writeBundle() {
       try {
         const sitemap = generateSitemap()
-        fs.mkdirSync(path.resolve(__dirname, 'dist'), { recursive: true })
-        fs.writeFileSync(path.resolve(__dirname, 'dist', 'sitemap.xml'), sitemap)
+        fs.mkdirSync(path.resolve(import.meta.dirname, 'dist'), { recursive: true })
+        fs.writeFileSync(path.resolve(import.meta.dirname, 'dist', 'sitemap.xml'), sitemap)
         console.log('✅ sitemap.xml generated with', (sitemap.match(/<url>/g) || []).length, 'urls')
       } catch (e) {
         console.warn('Sitemap generation failed', e)
@@ -40,7 +40,7 @@ function prerenderStatic() {
     name: 'prerender-static',
     writeBundle() {
       try {
-        const distDir = path.resolve(__dirname, 'dist')
+        const distDir = path.resolve(import.meta.dirname, 'dist')
         const templatePath = path.join(distDir, 'index.html')
         if (!fs.existsSync(templatePath)) {
           console.warn('Prerender: dist/index.html not found, skipping')
@@ -188,8 +188,8 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '/utils': path.resolve(__dirname, './utils'),
+      '@': path.resolve(import.meta.dirname, './src'),
+      '/utils': path.resolve(import.meta.dirname, './utils'),
     },
   },
   assetsInclude: ['**/*.svg', '**/*.csv'],
@@ -201,16 +201,40 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
-    rollupOptions: {
+    // Vite 8 (Rolldown): build.rollupOptions was renamed to
+    // build.rolldownOptions and manualChunks to output.advancedChunks.
+    rolldownOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router'],
-          supabase: ['@supabase/supabase-js'],
-          ui: ['lucide-react'],
-          query: ['@tanstack/react-query'],
-          helmet: ['react-helmet-async']
-        }
-      }
-    }
+        advancedChunks: {
+          groups: [
+            {
+              name: 'vendor',
+              test: /node_modules\/(react|react-dom|react-router|scheduler)\//,
+              priority: 20,
+            },
+            {
+              name: 'supabase',
+              test: /node_modules\/@supabase\//,
+              priority: 15,
+            },
+            {
+              name: 'ui',
+              test: /node_modules\/lucide-react\//,
+              priority: 15,
+            },
+            {
+              name: 'query',
+              test: /node_modules\/@tanstack\//,
+              priority: 15,
+            },
+            {
+              name: 'helmet',
+              test: /node_modules\/react-helmet-async\//,
+              priority: 15,
+            },
+          ],
+        },
+      },
+    },
   }
 })

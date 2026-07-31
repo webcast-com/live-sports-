@@ -1,5 +1,5 @@
 import { ArrowRightLeft, Loader2, Radio, Wifi } from 'lucide-react';
-import { useTransfers } from './useTransfersHook';
+import { useTransfers, type Transfer } from './useTransfersHook';
 
 const TransfersFeed: React.FC = () => {
   const { transfers, source, loading } = useTransfers();
@@ -22,7 +22,7 @@ const TransfersFeed: React.FC = () => {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {transfers.map((transfer) => (
+          {transfers.map((transfer: Transfer) => (
             <article key={transfer.id} className="rounded-xl border border-white/5 bg-[#161b22] p-4 transition-colors hover:border-[#00d4ff]/20 hover:bg-[#1c2333]">
               <div className="mb-4 flex items-start justify-between gap-3">
                 <h3 className="font-semibold text-white">{transfer.player}</h3>

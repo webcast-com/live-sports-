@@ -91,7 +91,7 @@ const AppLayout: React.FC = () => {
     trackPageView(location.pathname, { sport: activeSport, tab: activeTab });
   }, [location.pathname, activeSport, activeTab, trackPageView]);
 
-  const setActiveSport = (sport: Sport) => {
+  const setActiveSport = (sport: Sport | 'all') => {
     const prev = activeSport;
     const newParams = new URLSearchParams(searchParams);
     if (sport === 'all') {
@@ -103,7 +103,7 @@ const AppLayout: React.FC = () => {
       }
     } else {
       newParams.set('sport', sport);
-      if (sport !== 'all' && location.pathname === '/') {
+      if (location.pathname === '/') {
         navigate({ pathname: `/sport/${sport}`, search: '' });
         trackSportFilter(sport, prev);
         return;

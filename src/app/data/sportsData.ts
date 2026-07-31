@@ -28,7 +28,7 @@ export interface UpcomingMatch {
   awayTeam: string;
   date: string;
   time: string;
-  scheduledTime: string;
+  scheduledTime?: string;
   venue?: string;
   homeAbbr: string;
   awayAbbr: string;

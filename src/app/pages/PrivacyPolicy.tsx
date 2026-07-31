@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEO from '@/app/components/SEO';
 import Header from '@/app/components/sports/Header';
 import Footer from '@/app/components/sports/Footer';
 import type { Sport } from '@/app/data/sportsData';

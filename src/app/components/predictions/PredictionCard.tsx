@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import { Lock, LockOpen, Info, Bookmark } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useSavedPredictions } from '../../hooks/useSavedPredictions';
+import { teamInitialPlaceholder } from '@/app/utils/logoFallback';
 
 interface PredictionCardProps {
   prediction: Prediction;
@@ -69,12 +70,12 @@ export function PredictionCard({ prediction, onUpgrade, forceLocked = false, onS
         {/* Teams */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex flex-col items-center flex-1">
-            <img src={prediction.homeLogo} alt={prediction.homeTeam} className="w-12 h-12 object-contain mb-2" onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/48?text=' + prediction.homeTeam[0]; }} />
+            <img src={prediction.homeLogo} alt={prediction.homeTeam} className="w-12 h-12 object-contain mb-2" onError={(e) => { e.currentTarget.src = teamInitialPlaceholder(prediction.homeTeam); }} />
             <span className="text-sm font-semibold text-center leading-tight text-white">{prediction.homeTeam}</span>
           </div>
           <div className="px-4 text-gray-600 font-medium text-sm">VS</div>
           <div className="flex flex-col items-center flex-1">
-            <img src={prediction.awayLogo} alt={prediction.awayTeam} className="w-12 h-12 object-contain mb-2" onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/48?text=' + prediction.awayTeam[0]; }} />
+            <img src={prediction.awayLogo} alt={prediction.awayTeam} className="w-12 h-12 object-contain mb-2" onError={(e) => { e.currentTarget.src = teamInitialPlaceholder(prediction.awayTeam); }} />
             <span className="text-sm font-semibold text-center leading-tight text-white">{prediction.awayTeam}</span>
           </div>
         </div>

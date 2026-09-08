@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { CreditCard, Send, CheckCircle, AlertCircle, Code } from 'lucide-react';
+import { CreditCard, Send, CheckCircle, AlertCircle, Code, ShieldAlert } from 'lucide-react';
 
 export function WebhookSimulator() {
   const { user, refreshPlan } = useAuth();
@@ -11,7 +11,15 @@ export function WebhookSimulator() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
 
-  if (!user) return null;
+  if (!user) {
+    return (
+      <div className="max-w-2xl mx-auto py-16 text-center">
+        <ShieldAlert className="w-16 h-16 text-amber-400 mx-auto mb-4" />
+        <h1 className="text-3xl font-bold text-white mb-2">Webhook Simulator</h1>
+        <p className="text-slate-400">Please sign in to access the webhook simulator.</p>
+      </div>
+    );
+  }
 
   const handleSimulateWebhook = async () => {
     setLoading(true);

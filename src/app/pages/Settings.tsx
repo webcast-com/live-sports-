@@ -23,7 +23,16 @@ export function Settings() {
   const [form, setForm] = useState({ name: user?.name || '', country: user?.country || '', bio: user?.bio || '' });
   const [notifs, setNotifs] = useState(user?.preferences || { email_notifications: true, push_notifications: true, sms_notifications: false, favorite_teams: [], favorite_leagues: [], dark_mode: false, language: 'en' });
 
-  if (!user) return null;
+  if (!user) {
+    return (
+      <div className="max-w-2xl mx-auto py-16 text-center">
+        <SEO pageKey="settings" title="Settings - ScoreHub" />
+        <SettingsIcon className="w-16 h-16 text-[#00d4ff] mx-auto mb-4" />
+        <h1 className="text-3xl font-bold text-white mb-2">Settings</h1>
+        <p className="text-slate-400">Please sign in to manage your account and preferences.</p>
+      </div>
+    );
+  }
 
   const handleSave = async () => {
     setSaving(true);

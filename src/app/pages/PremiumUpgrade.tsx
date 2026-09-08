@@ -10,7 +10,9 @@ declare global {
   }
 }
 
-const PAYSTACK_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_live_d4e12fc3d689e19440973a66eaa985fcfdf1a7cc';
+// Paystack public key must come from env — never hardcode keys in source.
+const PAYSTACK_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || '';
+const paystackConfigured = /^pk_(test|live)_/.test(PAYSTACK_KEY) && !PAYSTACK_KEY.includes('your_');
 const PLAN = { code: 'KES', symbol: 'KSh', amount: 100, amountInKobo: 10000 };
 
 export function PremiumUpgrade({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
@@ -99,8 +101,8 @@ export function PremiumUpgrade({ setActiveTab }: { setActiveTab: (tab: string) =
       alert(`Payment gateway unavailable: ${scriptError || 'not loaded'}\nDisable ad blockers and try again.`);
       return;
     }
-    if (!PAYSTACK_KEY || (!PAYSTACK_KEY.includes('pk_test') && !PAYSTACK_KEY.includes('pk_live'))) {
-      alert('Payment gateway not properly configured.');
+    if (!paystackConfigured) {
+      alert('Payment gateway not configured. Set a valid VITE_PAYSTACK_PUBLIC_KEY (pk_test_... or pk_live_...).');
       return;
     }
     setLoadingPaystack(true);

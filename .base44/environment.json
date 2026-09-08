@@ -1,0 +1,17 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "VITE_RAPIDAPI_KEY",
+      "description": "RapidAPI key for live sports data (betigolo-tips, allsports, today-football-prediction APIs). Get it from your RapidAPI dashboard. Without it the app falls back to demo data.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "VITE_PAYSTACK_PUBLIC_KEY",
+      "description": "Paystack public key for the premium payment flow. Get it from your Paystack dashboard. Placeholder is fine for browsing non-payment pages.",
+      "requiredAtBoot": false
+    }
+  ]
+}
